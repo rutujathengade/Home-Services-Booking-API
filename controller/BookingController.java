@@ -1,0 +1,35 @@
+
+package Home_services.controller;
+
+import Home_services.dto.BookingRequest;
+import Home_services.entity.Booking;
+import Home_services.service.BookingService;
+
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/bookings")
+public class BookingController {
+
+    private final BookingService bookingService;
+
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Booking createBooking(
+            @Valid @RequestBody BookingRequest request) {
+        return bookingService.createBooking(request);
+    }
+
+    @GetMapping
+    public List<Booking> getAllBookings() {
+        return bookingService.getAllBookings();
+    }
+}
